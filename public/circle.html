@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emergency Circle - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page"><h1>🚨 Emergency circle</h1><p class="sub">Open emergency requests. Refreshes every 30 seconds.</p>
+<div id="list" class="list"></div></main>
+<script src="app.js"></script>
+<script>layout('circle.html');
+async function load() {
+  const rows = await api('/api/circle');
+  $('#list').innerHTML = rows.map((r) => `<div class="card"><span class="pill">${esc(r.bloodGroup)}</span> <b>${esc(r.patientName)}</b> · ${esc(r.units)} unit(s)<br>${esc(r.hospital)}, ${esc(r.city)}<br>📞 ${esc(r.phone)}<br><span class="muted">${esc(r.note)}</span></div>`).join('') || '<p>No emergency requests right now.</p>';
+}
+load(); setInterval(load, 30000);</script>
+</body></html>

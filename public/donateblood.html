@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Donate - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page"><h1>Become a donor</h1><p class="sub">Donors must be 18-65 years old and in good health.</p>
+<form id="f" class="card">
+<label>Full name<input name="name" required></label>
+<div class="row"><label>Blood group<select name="bloodGroup" class="groups" required></select></label>
+<label>Age<input name="age" type="number" min="18" max="65" required></label></div>
+<div class="row"><label>Phone<input name="phone" required></label><label>City<input name="city" required></label></div>
+<label>Last donation date (optional)<input name="lastDonation" type="date"></label>
+<button>Register as donor</button><div id="msg" class="msg"></div></form></main>
+<script src="app.js"></script>
+<script>layout('donateblood.html');
+handleForm('#f', '/api/donors', (r, form) => { msg(r.message, true); form.reset(); });</script>
+</body></html>

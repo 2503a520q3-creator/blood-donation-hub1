@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Need Blood - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page"><h1>Need blood?</h1><p class="sub">Submit a request and we'll show matching donors in your city.</p>
+<form id="f" class="card">
+<label>Patient name<input name="patientName" required></label>
+<div class="row"><label>Blood group<select name="bloodGroup" class="groups" required></select></label>
+<label>Units<input name="units" type="number" min="1" value="1"></label></div>
+<div class="row"><label>Hospital<input name="hospital"></label><label>City<input name="city" required></label></div>
+<div class="row"><label>Phone<input name="phone" required></label>
+<label>Urgency<select name="urgency"><option value="normal">Normal</option><option value="urgent">Urgent</option><option value="emergency">Emergency</option></select></label></div>
+<label>Note (optional)<textarea name="note" rows="2"></textarea></label>
+<button>Submit request</button><div id="msg" class="msg"></div></form>
+<div id="out" class="list"></div></main>
+<script src="app.js"></script>
+<script>layout('needblood.html');
+handleForm('#f', '/api/requests', (r) => {
+  msg(`Request submitted. ${r.matchingDonors} matching donor(s) in your city.`, true);
+  $('#out').innerHTML = r.donors.map((d) => `<div class="card"><span class="pill">${esc(d.bloodGroup)}</span> <b>${esc(d.name)}</b><br>📞 ${esc(d.phone)}</div>`).join('');
+});</script>
+</body></html>

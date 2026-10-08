@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page"><h1>Welcome back</h1><p class="sub">Log in to your account.</p>
+<form id="f" class="card">
+<label>Email<input name="email" type="email" required></label>
+<label>Password<input name="password" type="password" required></label>
+<button>Log in</button><div id="msg" class="msg"></div></form>
+<p class="muted">No account? <a href="signup.html">Sign up</a></p></main>
+<script src="app.js"></script>
+<script>layout('login.html'); handleForm('#f', '/api/login', saveLogin);</script>
+</body></html>

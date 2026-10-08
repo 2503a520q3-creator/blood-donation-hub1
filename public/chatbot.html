@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chatbot - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page"><h1>🤖 Ask me</h1><p class="sub">Try: "who can donate to O-?" or "am I eligible?"</p>
+<div id="chat" class="card chat"><div class="bubble bot">Hi! Ask me about blood groups or donating.</div></div>
+<form id="f" class="chat-form"><input id="q" placeholder="Type your question" autocomplete="off" required><button>Send</button></form></main>
+<script src="app.js"></script>
+<script>layout('chatbot.html');
+const add = (t, who) => { const b = document.createElement('div'); b.className = 'bubble ' + who; b.textContent = t; $('#chat').append(b); b.scrollIntoView(); };
+$('#f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const m = $('#q').value.trim(); if (!m) return;
+  add(m, 'me'); $('#q').value = '';
+  try { add((await api('/api/chatbot', { method: 'POST', body: { message: m } })).reply, 'bot'); }
+  catch (err) { add(err.message, 'bot'); }
+});</script>
+</body></html>

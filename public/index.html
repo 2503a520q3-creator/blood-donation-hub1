@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blood Donation Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<header>
+    <div class="header-inner">
+        <a class="brand" href="index.html">🩸 Blood Donation Hub</a>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="needblood.html">Need Blood</a>
+            <a href="donateblood.html">Donate</a>
+            <a href="blog.html">Blog</a>
+            <a href="admin.html">Admin</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html" class="nav-cta">Sign up</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-text">
+        <h2>Donate blood.<br>Save lives.</h2>
+        <p>One donation can help up to three people. Sign up as a donor or request blood in a few minutes.</p>
+
+        <div class="buttons">
+            <a class="btn-primary" href="donateblood.html">Donate now</a>
+            <a class="btn-secondary" href="needblood.html">Request blood</a>
+            <a class="btn-ghost" href="circle.html">🚨 Emergency circle</a>
+            <button class="btn-ghost" onclick="openChatbot()">🤖 Chat with me</button>
+        </div>
+    </div>
+
+    <div class="hero-drop" aria-hidden="true">
+        <div class="drop"><span>1</span><small>donation<br>up to 3 lives</small></div>
+    </div>
+</section>
+
+<!-- How it works -->
+<section class="steps">
+    <div class="step"><b>1</b><h3>Sign up</h3><p>Create a donor or patient account.</p></div>
+    <div class="step"><b>2</b><h3>Get matched</h3><p>Find people with the blood group you need.</p></div>
+    <div class="step"><b>3</b><h3>Donate</h3><p>Meet at a nearby centre and give blood.</p></div>
+</section>
+
+<!-- Profile Section -->
+<section class="profile-section">
+    <div class="container">
+        <div class="left">
+            <h2>Our volunteers ❤️</h2>
+            <ul class="volunteers">
+                <li>B. Ganapathi</li>
+                <li>Ch. Shiva Kumar</li>
+                <li>K. Vishnu Vardhan</li>
+                <li>T. Rudhvik</li>
+            </ul>
+        </div>
+        <div class="right">
+            <img src="myphoto.jpeg" alt="Our volunteer team">
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Blood Donation Hub</p>
+</footer>
+
+<script>
+function openChatbot() {
+    window.location.href = "chatbot.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page wide"><h1>Admin panel</h1>
+<div id="panel"><div id="stats" class="stats"></div>
+<h2>Donors</h2><div class="table-wrap"><table><tbody id="donors"></tbody></table></div>
+<h2>Blood requests</h2><div class="table-wrap"><table><tbody id="reqs"></tbody></table></div>
+<h2>Blog posts</h2>
+<form id="postForm" class="card"><label>Title<input name="title" required></label>
+<label>Content<textarea name="content" rows="4" required></textarea></label>
+<button>Publish post</button><div id="msg" class="msg"></div></form>
+<div id="posts" class="list"></div></div></main>
+<script src="app.js"></script>
+<script>layout('admin.html');
+const u = getUser();
+if (!u || u.role !== 'admin') {
+  $('#panel').innerHTML = '<p>Admins only. <a href="login.html">Log in</a> with the admin account.</p>';
+} else { load(); }
+const btn = (act, id, label) => `<button class="small" data-act="${act}" data-id="${id}">${label}</button>`;
+async function load() {
+  const [s, d, r, p] = await Promise.all([api('/api/admin/stats'), api('/api/admin/donors'), api('/api/admin/requests'), api('/api/posts')]);
+  $('#stats').innerHTML = Object.entries(s).map(([k, v]) => `<div class="card"><b>${v}</b><br>${esc(k)}</div>`).join('');
+  $('#donors').innerHTML = d.map((x) => `<tr><td>${esc(x.name)}</td><td>${esc(x.bloodGroup)}</td><td>${esc(x.city)}</td><td>${esc(x.phone)}</td><td>${btn('del-donor', x.id, 'Delete')}</td></tr>`).join('') || '<tr><td>No donors yet</td></tr>';
+  $('#reqs').innerHTML = r.map((x) => `<tr><td>${esc(x.patientName)}</td><td>${esc(x.bloodGroup)}</td><td>${esc(x.city)}</td><td>${esc(x.urgency)}</td><td>${esc(x.status)}</td><td>${btn('done-req', x.id, 'Fulfilled')} ${btn('del-req', x.id, 'Delete')}</td></tr>`).join('') || '<tr><td>No requests yet</td></tr>';
+  $('#posts').innerHTML = p.map((x) => `<div class="card"><b>${esc(x.title)}</b> ${btn('del-post', x.id, 'Delete')}</div>`).join('');
+}
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('button[data-act]'); if (!b) return;
+  const { act, id } = b.dataset;
+  const calls = {
+    'del-donor': ['/api/admin/donors/' + id, 'DELETE'],
+    'del-req': ['/api/admin/requests/' + id, 'DELETE'],
+    'done-req': ['/api/admin/requests/' + id, 'PATCH', { status: 'fulfilled' }],
+    'del-post': ['/api/posts/' + id, 'DELETE'],
+  };
+  const [url, method, body] = calls[act];
+  await api(url, { method, body });
+  load();
+});
+handleForm('#postForm', '/api/posts', (r, form) => { msg('Post published.', true); form.reset(); load(); });</script>
+</body></html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign up - Blood Donation Hub</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head>
+<body>
+<main class="page"><h1>Create account</h1><p class="sub">Join as a donor or a patient.</p>
+<form id="f" class="card">
+<label>Full name<input name="name" required></label>
+<label>Email<input name="email" type="email" required></label>
+<label>Password (min 6)<input name="password" type="password" minlength="6" required></label>
+<label>I am a<select name="role"><option value="donor">Donor</option><option value="patient">Patient</option></select></label>
+<button>Sign up</button><div id="msg" class="msg"></div></form></main>
+<script src="app.js"></script>
+<script>layout('signup.html'); handleForm('#f', '/api/signup', saveLogin);</script>
+</body></html>
